@@ -1340,4 +1340,11 @@ img {
 | uploads/ | 产品类图片，后期更换方便存放 |
 | favicon.ico | 网页favicon图标 |
 | index.html | 首页html文件 |
+## header
+### logo（让搜索引擎更好的收录网站）
+- 给用h1来提高权重
+- 里面包含链接，可以点击跳转首页
+- 给链接的背景图片，并且给链接添加tittle
+- 链接里写网站名字，然后把文字**隐藏**
+  用 `text-indent` 负值 + `overflow: hidden` 裁剪掉文字
 
