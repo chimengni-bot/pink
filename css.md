@@ -1347,4 +1347,5 @@ img {
 - 给链接的背景图片，并且给链接添加tittle
 - 链接里写网站名字，然后把文字**隐藏**
   用 `text-indent` 负值 + `overflow: hidden` 裁剪掉文字
-
+index首页-header-entry入口（category分类+banner）
+small/span都是行内元素小标签
