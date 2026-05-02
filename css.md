@@ -1349,3 +1349,42 @@ img {
   用 `text-indent` 负值 + `overflow: hidden` 裁剪掉文字
 index首页-header-entry入口（category分类+banner）
 small/span都是行内元素小标签
+### 单行文本溢出省略号（固定套路）
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+三个属性缺一不可：
+overflow: hidden — 超出隐藏
+text-overflow: ellipsis — 显示省略号
+white-space: nowrap — 禁止换行
+建议放在 common.css 里，哪里需要加 class="ellipsis" 复用。
+## CSS 布局
+
+> Finally here~
+
+CSS 布局是网页设计的核心技术之一，用于控制元素在页面中的排列方式。
+
+### 布局类型
+
+| 类型 | 名称 |
+|------|------|
+| normal | 正常布局 |
+| display | 模式转换布局 |
+| flexbox | 弹性布局 |
+| position | 定位布局 |
+| grid | 网格布局 |
+| column | 多列布局 |
+
+### 使用建议
+
+每种技术都有它们的用途，各有优缺点，相互辅助。
+
+- **简单布局**：优先使用 Flexbox（一维）或 Grid（二维）。
+- **复杂响应式布局**：使用 Grid + 媒体查询。
+- **文本内容分栏**：多列布局（column-count）
+- **兼容旧浏览器**：浮动布局 或 Flexbox 的降级方案。
+- CSS Grid 逐渐成为主流，支持更复杂的布局场景。
+
+# 77.定位布局-相对定位和绝对定位以及子绝父相
