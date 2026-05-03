@@ -2021,9 +2021,3 @@ break-inside: avoid-column;
 | **交互与动画** | `cursor`（鼠标指针）、`opacity`（透明度）、`transition`（过渡）、`animation`（动画）、`transform`（变换，如旋转、缩放） |
 | **其他（特殊/低频）** | `filter`（滤镜）、`clip-path`（裁剪路径）、`backdrop-filter`（背景滤镜）、`will-change`（优化提示）、`touch-action`（触摸行为）、`scroll-behavior`（滚动行为） |
 
-
-# 91.第四章案例展示以及2D变换之平移translate
-- 变换
-- 动画
-- 动效案例
-
