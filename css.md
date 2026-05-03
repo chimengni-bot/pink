@@ -1522,3 +1522,508 @@ display:none;
 scroll-behavior：smooth；
 
 # 81.固定定位喝粘性定位
+## 固定定位
+
+> sun wukong~
+
+CSS 固定定位（position: fixed）是一种将元素脱离文档流并始终相对于**浏览器视口**定位的布局技术。
+
+### 场景：
+
+1. **固定导航栏** — 页面滚动时导航栏始终**固定**在视口顶部
+2. **页面广告** — 广告覆盖整个页面
+
+### 语法：
+
+```css
+position: fixed;   /* 设定元素为固定定位 */
+```
+
+- 元素**脱离正常流**，不占据空间，其他元素按原布局排列
+- 始终相对于浏览器窗口（**视口**）定位，滚动页面时位置不变
+- 可以通过 `top`、`bottom`、`left`、`right` 属性进行偏移
+- 优先级：若同时设置 top 和 bottom，仅 `top` 生效；同理 `left` 覆盖 `right`
+
+## 粘性定位
+
+> sticky~
+
+CSS 粘性定位（position: sticky）是一种**混合定位模式**，结合了相对定位（relative）和固定定位（fixed）的特性。
+
+### 场景：
+
+1. **吸顶效果** — 元素在滚动到某个位置后固定
+2. **表格表头固定** — 长表格滚动时表头始终可见
+
+### 语法：
+
+```css
+position: sticky;   /* 设定元素为粘性定位 */
+```
+
+- 元素在滚动到指定位置（如 top: 10px）前为相对定位，之后转为固定定位
+- **父容器**的 overflow 需为 `visible`，否则粘性定位失效
+- 可以通过 `top`、`bottom`、`left`、`right` 属性进行偏移
+- 须指定 top、right、bottom 或 left 四个其中之一，才可使粘性定位生效
+
+# 82.定位布局-z-index叠放次序以及总结
+## 定位布局 - 层叠顺序
+
+> z-index~
+
+z-index 属性用于控制元素在三维空间中的**层叠顺序**（即 Z 轴方向）。当多个元素在同一个平面（如同一行或列）重叠时，z-index 决定哪个元素显示在最上层。
+
+### 场景：
+
+1. 提高层级悬浮效果
+2. 实现图片层叠效果
+
+### 语法：
+
+```css
+z-index: 数值;   /* 设定层级 */
+```
+
+- **值类型**：整数（正数、负数、零）或 auto。数值越大，层级越高
+- **默认值**：auto（等同于未设置，后出现的元素覆盖前者）
+- **生效条件**：仅对定位元素（position 值为 relative、absolute、fixed 或 sticky）有效
+
+## 定位总结
+
+> summarize~
+
+### 对比表格
+
+| 定位类型 | 脱离文档流 | 定位基准 | 层叠控制 | 典型场景 |
+|---|---|---|---|---|
+| static | 否 | 默认文档流 | 无 | 普通元素布局 |
+| relative | 否 | 自身正常位置 | 支持 | 微调元素、子绝父相 |
+| absolute | 是 | 最近定位祖先 / 视口 | 支持 | 弹窗、下拉菜单、悬浮元素 |
+| fixed | 是 | 视口 | 支持 | 固定导航栏、返回顶部按钮 |
+| sticky | 否 | 视口或滚动祖先 | 支持 | 吸顶导航栏、侧边栏固定 |
+
+### 定位属性：
+
+- `position` — static / relative / absolute / fixed / sticky
+- **偏移属性** — `top` / `right` / `bottom` / `left` 控制元素偏移量
+- `z-index` — 控制层叠顺序，数值越大层级越高
+
+### 常见组合：
+
+- **固定导航栏**：`position: fixed` + `z-index`
+- **弹窗**：`position: fixed` + 居中技巧 + 高 `z-index`
+- **吸顶效果**：`position: sticky` + `top`
+
+# 83.网格布局-grid布局介绍以及网格轨道
+## CSS 布局
+
+> Finally here~
+
+CSS 布局是网页设计的核心技术之一，用于控制元素在页面中的排列方式。
+
+### 布局类型
+
+| 类型 | 名称 |
+|------|------|
+| normal | 正常布局 |
+| display | 模式转换布局 |
+| flexbox | 弹性布局 |
+| position | 定位布局 |
+| grid | 网格布局 |
+| column | 多列布局 |
+
+### 使用建议
+
+每种技术都有它们的用途，各有优缺点，相互辅助。
+
+- **简单布局**：优先使用 Flexbox（一维）或 Grid（二维）。
+- **复杂响应式布局**：使用 Grid + 媒体查询。
+- **文本内容分栏**：多列布局（column-count）
+- **兼容旧浏览器**：浮动布局 或 Flexbox 的降级方案。
+- CSS Grid 逐渐成为主流，支持更复杂的布局场景。
+
+## 网格布局
+
+> CSS Grid Layout
+
+网格布局是一种**二维布局**模型，允许开发者通过定义行（rows）和列（columns）来精确控制网页元素的位置和尺寸。
+
+> 实际开发大部分是**两者混用**的：
+> 1. **Flexbox**：适合快速实现一维布局、动态内容对齐。比如单行布局
+> 2. **Grid**：适合构建复杂页面框架，提供更强大的二维控制能力。比如多列或者响应式等
+
+---
+
+### Grid 概念总结
+
+> you know~
+
+| 概念 | 说明 |
+|---|---|
+| 容器 | 设置了 `display: grid` 的父元素 |
+| 项目 | 容器内的直接子元素 |
+| 行 | 水平方向的轨道 |
+| 列 | 垂直方向的轨道 |
+| 单元格 | 行和列的交叉区域 |
+
+- **flex** = 单行布局
+- **grid** = 多行多列布局
+- 开发常见：单行布局用 flex，多行或响应式用 grid
+- 网格布局的核心：创建好网格并放入各类元素
+
+---
+
+### 2. 网格容器
+
+> grid
+
+容器（父盒子）设置 `display: grid`（块级）或者 `display: inline-grid`（行内）
+
+> 与弹性盒子不同的是，在定义网格后，网页并不会马上发生变化。因为 `display: grid` 的声明只创建了一个只有一列的网格。
+
+---
+
+### 3. 网格轨道
+
+> grid tracks
+
+网格轨道（Grid Tracks）决定了网格容器的基础布局结构，为子元素提供放置的位置。
+
+#### 绘制网格：
+
+- `grid-template-columns` — 定义网格中的列
+- `grid-template-rows` — 定义网格中的行
+
+#### 属性值：
+- 有几个属性值代表创建几列/行
+- 长度单位，比如 100px
+
+```css
+grid-template-columns: 200px 200px 200px;
+/* 定义三列，每列宽度为 200px */
+
+grid-template-rows: 200px 200px 200px;
+/* 定义三行，每行高度为 200px */
+```
+## 4. 网格轨道 - 对齐方式
+
+> justify-content、align-content
+
+- `justify-content` 是控制**列轨道**（Column Tracks）在容器内水平分布
+- `align-content` 是控制**行轨道**（Row Tracks）在容器内垂直分布
+
+| 属性值 | 水平方向效果 | 垂直方向效果 |
+|---|---|---|
+| start（默认值） | 左对齐 | 顶部对齐 |
+| end | 右对齐 | 底部对齐 |
+| center | 水平居中对齐 | 垂直居中对齐 |
+| space-around | 两侧留出相等的空白，项目周围空间均匀分布 | 上下留出相等的空白，项目周围空间均匀分布 |
+| space-between | 首尾项目贴边 | 上下项目贴边 |
+| space-evenly | 项目间、首尾与边界的空白相等 | 项目间、首尾与边界的空白相等 |
+
+# 84.网格布局-fr单位以及gap和repeat函数
+## 3. 网格轨道
+
+> grid tracks
+
+绘制网格（网格轨道）：`grid-template-columns` / `grid-template-rows` 属性值
+
+| 属性值 | 说明 | 示例 | 应用场景 |
+|---|---|---|---|
+| 固定长度 | 使用 px、em 等固定单位定义列宽 | `grid-template-columns: 100px 200px` | 需要精确控制列宽的固定布局 |
+| 百分比 | 按容器宽度百分比分配列宽 | `grid-template-columns: 30% 70%` | 响应式布局中按比例划分列 |
+| fr 单位 | 分配轨道剩余空间的比例（1fr 表示一份，总和为容器剩余空间），fr 是 fraction 缩写，意思分数 | `grid-template-columns: 1fr 2fr` | 需要自适应比例分配的布局 |
+| auto | 列宽由内容自动撑开 | `grid-template-columns: auto 100px` | 内容宽度不确定时的灵活布局 |
+| repeat() 函数 | 简化重复的列定义 | `grid-template-columns: repeat(3, 1fr)`（等效于 1fr 1fr 1fr） | 多列等宽布局 |
+| minmax() 函数 | 定义列宽的最小值和最大值 | `grid-template-columns: minmax(100px, 1fr)` | 响应式布局中限制列宽范围 |
+
+## 5. 网格间距
+
+> gap
+
+`gap` 简写属性用于设置行与列之间的间隙（网格间距）
+
+### 使用场景：
+1. 让元素之间保留间隙
+
+### 语法：
+
+```css
+gap: 20px;        /* 行和列之间保持 20 像素间隙 */
+gap: 20px 30px;   /* 行间距是 20 像素，列间距是 30 像素 */
+```
+
+### 注意：gap 是简写形式，也可以分开写
+
+```css
+column-gap: 30px;  /* 列间距 */
+row-gap: 20px;     /* 行间距 */
+```
+
+---
+
+## repeat() 函数
+
+### 语法：
+
+```css
+repeat(次数, 轨道尺寸)
+/* 或 */
+repeat(自动填充, 轨道尺寸)
+```
+
+### 1. 固定次数：
+
+```css
+grid-template-columns: repeat(3, 1fr);
+/* 等效于 1fr 1fr 1fr，创建 3 列等宽布局 */
+```
+# 85.网格布局-auto fill自动填充完成响应式效果
+
+### 2. 自动填充：适用于响应式布局中"列数随容器宽度变化"的场景
+
+- `auto-fill`：尽可能多地创建列
+- `auto-fit`：尽可能拉伸列填满容器（会合并空白，列宽不小于 minmax 的最小值）
+
+```css
+grid-template-columns: repeat(auto-fill, 200px);
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+```
+
+---
+
+## minmax() 函数
+
+### 语法：
+
+```css
+minmax(最小值, 最大值)
+
+/* 示例 */
+minmax(200px, 1fr)
+/* 列宽最小 200px，最大占满剩余空间 */
+```
+```css
+grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+```
+
+> 每列最小 100px，最大均分剩余空间，列数根据容器宽度自动增减。
+
+# 86.网格布局-网格线以及练习网格的小游戏网站
+### repeat() 函数 - auto-fill 与 auto-fit 区别
+
+当容器空间远远大于所有子元素大小时：
+
+1. **auto-fill** — 留有空白空间
+2. **auto-fit** — 会拉伸盒子占满父容器空间
+
+---
+
+## 6. 网格线
+
+> grid line~
+
+如何实现**元素跨越**多个网格单元？
+
+> 网格线分为**列线**（垂直）和**行线**（水平），编号从 1 开始。
+
+### 实现语法 1：指定开始线和结束线
+
+```css
+/* 跨列：grid-column: 开始线编号 / 结束线编号 */
+/* 跨行：grid-row:    开始线编号 / 结束线编号 */
+
+grid-column: 1 / 3;   /* 从第 1 列到第 3 列 */
+grid-row: 1 / 3;      /* 从第 1 行到第 3 行 */
+```
+
+### 实现语法 2：指定开始线 + span 跨越数量
+
+```css
+/* 跨列：grid-column: 开始线编号 / span 跨单元格数量 */
+/* 跨行：grid-row:    开始线编号 / span 跨单元格数量 */
+
+grid-column: 1 / span 2;   /* 从 1 线开始，跨 2 个单元格 */
+grid-row: 1 / span 2;      /* 从 1 线开始，跨 2 个单元格 */
+```
+
+> **注意：** 该属性要加到**项目（子元素）**身上。
+
+# 87.网格布局-auto flow自动填充以及object fit自动缩放
+## 7. 网格填充方式
+
+> grid-auto-flow
+
+`grid-auto-flow` 决定网格容器中子元素**排列填充**方式
+
+### 语法：
+
+```css
+/* 1. 默认值 */
+grid-auto-flow: row;
+/* 子元素按先行后列顺序填充，优先填满一行后换行 */
+
+/* 2. 按列填充 */
+grid-auto-flow: column;
+/* 子元素按先列后行顺序填充，优先填满一列后换列 */
+```
+
+### 场景：
+
+B 站、蔚来布局中有些子元素是按照列方式显示。
+## object-fit
+
+`object-fit` 是 CSS 中用于控制替换元素（如 `<img>`、`<video>`、`<iframe>` 等加载外部资源的元素）内容如何适应其容器尺寸的属性。
+
+| 值 | 描述 |
+|---|---|
+| fill | 默认值。拉伸内容以完全填充容器，不保持宽高比，可能导致内容变形（最常用但需谨慎） |
+| contain | 保持内容固有宽高比，缩放至完全适应容器内部（内容全部可见），容器可能有空白（类似"适应"模式） |
+| cover | 保持内容固有宽高比，缩放至覆盖容器（内容可能部分被裁剪），容器无空白（类似"填充"模式） |
+
+### 配合：
+
+`object-position`：控制内容在容器内的对齐位置（如 `center` 居中、`top left` 左上角），常与 `object-fit` 搭配使用（例如 cover 时调整裁剪区域）。
+
+# 88.网格布局-项目对齐方式以及必看总结
+## 8. 项目对齐方式
+
+> justify-items、align-items
+
+在 CSS Grid 布局中，控制元素在网格内的对齐方式。
+
+### 语法：
+
+```css
+justify-items: 水平对齐方式;   /* 水平方向（行轴）*/
+align-items: 垂直对齐方式;     /* 垂直方向（列轴）*/
+place-items: 水平+垂直方式;    /* 简写 */
+```
+
+> 为了提高可读性和兼容性，提倡使用前面两种方式。
+
+**场景：** 元素在网格内对齐。
+
+---
+
+## 网格布局 - 总结
+
+> grid
+
+### 1. 创建网格轨道
+
+```css
+display: grid;
+
+/* 创建列轨道 */
+grid-template-columns: 100px 100px 100px;
+
+/* 创建行轨道 */
+grid-template-rows: 100px 100px 100px;
+
+/* 列轨道两端对齐 */
+justify-content: space-between;
+
+/* 行轨道两端对齐 */
+align-content: space-between;
+```
+
+### 2. 项目对齐方式
+
+```css
+/* 水平对齐方式 */
+justify-items: start;
+justify-items: end;
+justify-items: center;
+justify-items: stretch;
+```
+
+### 3. gap 网格间隙
+
+```css
+gap: 20px;
+```
+
+### 4. grid-auto-flow 自动填充
+
+```css
+grid-auto-flow: row;   /* 默认 */
+```
+
+### 5. 响应式布局
+
+核心代码：
+
+```css
+grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+/* 每列最小 210px，自动计算列数，剩余空间均分 */
+```
+
+# 89.多列布局
+## 多列布局
+
+多列布局用于将元素的内容**自动分割**为指定数量的垂直列。
+
+### 场景：
+
+1. **长文章分栏** — 文章自动分列，中间有间隙，也可以做响应式
+2. **图片瀑布流**
+
+### 属性：
+
+| 属性 | 作用 | 示例值 |
+|---|---|---|
+| `column-count` | 根据容器宽度和 column-count 值，**自动分配列宽** | `column-count: 3` 分为 3 列 |
+| `column-gap` | 列之间的间距 | `20px`、`normal`（默认 1em） |
+| `column-rule` | 列间的分隔线样式（颜色、宽度、样式） | `column-rule: 1px solid #ccc` |
+
+> 核心是前两个：`column-count` 和 `column-gap`
+### 注意：
+
+1. 底部子元素被"**切断**"
+   - 原因：`column-count` 的本质是将内容按垂直方向**自动分割到多列**（类似报纸排版），内容会优先填满一列后再流入下一列
+
+### 解决方案：
+
+```css
+break-inside: avoid-column;
+/* 强制元素不跨列分割（默认 auto，允许跨列）*/
+/* 给子元素添加 */
+```
+# 90.常见鼠标样式以及CSS属性书写顺序
+## cursor 鼠标样式
+
+在 CSS 中，`cursor` 属性用于控制**鼠标指针**在元素上的**显示样式**，通过改变光标形态可以向用户传递交互提示（如"可点击""不可选中"等），从而提升界面交互体验。
+
+| 值 | 描述 |
+|---|---|
+| `default` | 默认箭头（通常是系统默认的箭头光标） |
+| **`pointer`** | 手型（指尖朝下的小手），常用于可点击元素（如链接 `<a>`、按钮 `<button>`） |
+| `text` | I 型竖线（类似文本输入光标），用于可编辑文本区域（如 `<textarea>`、contenteditable 元素） |
+| `wait` | 等待（旋转圆圈或沙漏），表示操作进行中（如加载、提交时） |
+| `help` | 帮助（带问号的箭头），提示用户需要帮助（如提示信息区域） |
+| **`not-allowed`** | 禁止（圆圈带斜线），表示操作不可用（如禁用的按钮） |
+| `grab` | 抓取（手型带抓取动作），表示可拖动（如可拖拽的元素） |
+| `grabbing` | 抓取中（手型收紧），表示正在拖动（配合 grab 使用） |
+| `zoom-in` | 放大（+ 号），表示放大操作（如图片预览时） |
+| `zoom-out` | 缩小（- 号），表示缩小操作（如图片预览时） |
+| `move` | 拖放的小十字架 |
+
+## CSS 属性书写顺序
+
+合理的属性顺序应遵循「**布局 → 盒模型 → 视觉 → 交互 → 其他**」的逻辑，核心目标是让代码更易读、易维护。实际开发中可根据项目需求微调，但保持团队**一致性**是关键！
+
+| 顺序 | 常见属性列表 |
+|---|---|
+| **布局相关** | `display`（显示类型）、`visibility`（可见性）、`position`（定位方式）、`top/right/bottom/left`（定位偏移）、`float`（浮动）、`clear`（清除浮动）、`overflow`（溢出处理）、`z-index`（层叠顺序）、`clip`（裁剪） |
+| **盒模型** | `box-sizing`（盒模型计算方式）、`width/min-width/max-width`（宽度）、`height/min-height/max-height`（高度）、`margin`（外边距）、`padding`（内边距）、`border`（边框）、`outline`（轮廓，可选） |
+| **视觉样式** | `color`（文本颜色）、`background`（背景）、`font`（字体合写）、`font-size`（字号）、`font-family`（字体系列）、`line-height`（行高）、`text-align`（文本对齐）、`text-indent`（首行缩进）、`letter-spacing`（字间距）、`white-space`（空白处理） |
+| **交互与动画** | `cursor`（鼠标指针）、`opacity`（透明度）、`transition`（过渡）、`animation`（动画）、`transform`（变换，如旋转、缩放） |
+| **其他（特殊/低频）** | `filter`（滤镜）、`clip-path`（裁剪路径）、`backdrop-filter`（背景滤镜）、`will-change`（优化提示）、`touch-action`（触摸行为）、`scroll-behavior`（滚动行为） |
+
+
+# 91.第四章案例展示以及2D变换之平移translate
+- 变换
+- 动画
+- 动效案例
+
