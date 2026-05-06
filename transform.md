@@ -1,4 +1,4 @@
-# 91.第四章案例展示以及2D变换之平移translate
+<img width="3130" height="1628" alt="image" src="https://github.com/user-attachments/assets/f33279e8-cc95-4071-8585-c7eb86fb804a" /># 91.第四章案例展示以及2D变换之平移translate
 - 变换
 - 动画
 - 动效案例
@@ -241,3 +241,51 @@ transform: perspective(1000px) rotateX(45deg);
 - 反之即为负值方向
 
 # 100.3D变换之两面翻转的盒子效果
+## 3D 旋转 - 两面翻转的盒子
+## 语法
+
+```css
+backface-visibility: hidden;
+```
+
+## 作用
+
+控制元素背面的可见性（默认镜像显示），常用于隐藏背面（如扑克牌翻转效果）。
+
+## 取值
+
+- `visible`：背面可见（默认）
+- `hidden`：背面隐藏
+
+# 101.3D变换之3D位移以及开启子元素3D空间
+
+## 3D 位移
+
+CSS 3D 平移函数 `translateZ()` 与 `translate3d()`。
+
+## 语法
+
+```css
+transform: translateZ(100px);
+```
+
+## 说明
+
+- 沿 Z 轴（垂直于屏幕方向）平移元素，实现近大远小的立体效果
+- 正值元素靠近观察者（放大），负值远离观察者（缩小）
+- 需父容器设置 `perspective` 属性才能生效，否则无视觉变化
+- 
+## 两个核心知识点
+
+```css
+/* 父元素:开启 3D 空间 */
+.parent {
+    transform-style: preserve-3d;
+}
+
+/* 子元素:在 3D 空间里位移 */
+.child {
+    transform: translate3d(0, 0, 60px);
+}
+```
+# 102.动画animation-基本使用
