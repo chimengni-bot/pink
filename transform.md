@@ -1,4 +1,4 @@
-<img width="3130" height="1628" alt="image" src="https://github.com/user-attachments/assets/f33279e8-cc95-4071-8585-c7eb86fb804a" /># 91.第四章案例展示以及2D变换之平移translate
+># 91.第四章案例展示以及2D变换之平移translate
 - 变换
 - 动画
 - 动效案例
