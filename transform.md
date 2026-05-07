@@ -289,3 +289,129 @@ transform: translateZ(100px);
 }
 ```
 # 102.动画animation-基本使用
+
+## 是什么
+
+通过定义**关键帧**实现元素动态效果的技术。
+
+## 关键帧(Keyframe)
+
+定义动画中**起始、转折、结束**等关键状态,中间过渡由浏览器自动补全。
+
+## 基本用法
+
+/* 1. 定义关键帧 */
+**写法一:百分比**(适合多个关键帧)
+
+```css
+@keyframes move {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(50px); }
+    100% { transform: translateX(100px); }
+}
+```
+写法二:from / to(只有起点和终点时简写)
+```css
+@keyframes move {
+    from { transform: translateX(0); }
+    to   { transform: translateX(100px); }
+}
+```
+/* 2. 使用动画 */
+```css
+.box {
+    animation: move 2s infinite;
+}
+```
+
+# 103.动画animation-完整写法
+# animation 完整写法
+
+```css
+animation: 动画名称 动画时长 速度曲线 延迟时间 播放次数 播放方向 执行完毕状态;
+```
+
+## 规则
+
+- 动画名称、动画时长**必写**,其余可省略
+- 顺序不能乱
+- 写在目标元素里
+
+## 子属性
+
+| 子属性 | 默认值 | 说明 |
+|---|---|---|
+| 播放次数 | `1` | 无限循环写 `infinite` |
+| 播放方向 | `normal` | `reverse`(反向)、`alternate`(交替) |
+| 执行完毕状态 | `none` | `forwards`(停在最后一帧)、`backwards`(回到第一帧) |
+
+## 示例
+
+```css
+.box { animation: move 1s infinite alternate; }
+```
+# animation 单写属性
+
+| 子属性 | 默认值 | 说明 |
+|---|---|---|
+| `animation-timing-function` | `ease` | 速度曲线,支持 `linear`、`cubic-bezier()` 等 |
+| `animation-delay` | `0s` | 延迟时间,可设负值(跳过部分动画) |
+| `animation-iteration-count` | `1` | 播放次数,无限循环写 `infinite` |
+| `animation-direction` | `normal` | 播放方向,`reverse`(反向)、`alternate`(交替) |
+| `animation-fill-mode` | `none` | 结束后状态,`forwards` 保留最后一帧 |
+| `animation-play-state` | `running` | 暂停/继续,`paused` 暂停动画 |
+
+## 示例
+
+```css
+.box {
+    animation-name: move;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-play-state: paused;  /* 鼠标移入时改 running */
+}
+```
+
+# 104.动画animation-仿360急速浏览器首屏效果
+
+# 105.动画animation-逐帧动画以及仿手机360逐帧案例
+
+
+## 原理
+
+像翻页书一样,把图片在**离散的步骤**间跳跃切换,而不是平滑过渡。
+
+1. 通过改变**背景位置**移动图片,移动距离 = 图片宽度
+2. 图片有 N 个图形,`steps` 就写 N
+
+## 语法
+
+```css
+.box {
+    animation: move 1s steps(8) infinite;
+    /*               步数为正整数 */
+}
+```
+
+- `steps(N)`:N 必须是**正整数**
+- 常配合**精灵图(sprite)**实现帧动画
+
+## 示例:精灵图奔跑动画
+
+```css
+.run {
+    width: 140px;        /* 单帧宽度 */
+    height: 140px;
+    background: url(sprite.png) no-repeat;
+    animation: run 1s steps(8) infinite;
+}
+
+@keyframes run {
+    from { background-position: 0 0; }
+    to   { background-position: -1120px 0; }  /* 8 帧 × 140px */
+}
+```
+
+## 要点
+
+> **steps 把动画切成 N 段跳着播,配合精灵图就是逐帧动画。**
