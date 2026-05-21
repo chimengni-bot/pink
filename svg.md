@@ -79,3 +79,47 @@ CSS 样式：
 ```
 
 # 117.svg图片-仿OPPOAI里程碑案例
+# 118.svg图片-无人机动画案例
+# 119.clip-path裁剪-基本语法使用
+## clip-path
+
+`clip-path` 创建复杂的裁剪形状，使元素仅显示被裁剪区域内的部分。
+
+### 语法
+
+`clip-path: 内置几何形。`
+
+- 内置几何形，状如 `circle()`、`polygon()` 等。
+
+```css
+.circle {
+  clip-path: circle(40% at 50% 50%);
+}
+```
+
+> 不需要去记这些参数。
+
+### 常见内置几何形
+
+| 函数 | 说明 | 示例 |
+| --- | --- | --- |
+| `circle()` | 圆形裁剪 | `clip-path: circle(40% at 50% 50%);` |
+| `ellipse()` | 椭圆裁剪 | `clip-path: ellipse(40% 20% at 50% 50%);` |
+| `polygon()` | 多边形裁剪（任意点） | `clip-path: polygon(50% 0, 100% 100%, 0 100%);` |
+| `inset()` | 矩形/内缩裁剪 | `clip-path: inset(10% 20% 10% 20% round 10px);` |
+| `path()` | SVG 路径裁剪 | `clip-path: path('M0,0 L100,0 L50,100 Z');` |
+
+### 常见应用场景
+
+- 圆形、椭圆形、三角形、菱形、五边形、六边形、星形、消息框等不规则形状
+- 平行四边形按钮、斜切图片拼接（如游戏下载入口、汽车展示页）
+- 鼠标悬停的裁剪动画过渡效果
+
+### 可视化工具
+
+`https://tools.jb51.net/static/api/css3path/index.html`
+
+直接在网页上拖拽生成 `clip-path` 代码，不用手写坐标。
+
+# 120.clip-path裁剪-灯光扫描文字效果
+# 121-turn旋转一圈-仿华为官网花瓣旋转效果
