@@ -122,4 +122,62 @@ CSS 样式：
 直接在网页上拖拽生成 `clip-path` 代码，不用手写坐标。
 
 # 120.clip-path裁剪-灯光扫描文字效果
-# 121-turn旋转一圈-仿华为官网花瓣旋转效果
+# 121.turn旋转一圈-仿华为官网花瓣旋转效果
+# 122.滤镜filter的使用
+## 滤镜 filter
+
+CSS 滤镜通过 `filter` 属性实现，可对元素及其子元素进行实时图像处理，无需修改原始素材。
+
+### 滤镜函数一览
+
+| 滤镜函数 | 作用 | 语法示例 | 说明 |
+| --- | --- | --- | --- |
+| `blur()` | 高斯模糊 | `blur(5px)` | 值越大越模糊 |
+| `brightness()` | 调整元素亮度 | `brightness(150%)` | 100%（或 1）为原始亮度；<100% 变暗；>100% 变亮 |
+| `contrast()` | 调整元素对比度 | `contrast(200%)` | 同上 |
+| `saturate()` | 调整背景饱和度 | `saturate(150%)` | 0%（无色彩）~ 100%（原饱和度）~ >100%（更高饱和） |
+| `grayscale()` | 将元素转换为灰度图 | `grayscale(100%)` | 0%（或 0）为原始色彩；100%（或 1）为完全灰度 |
+| `hue-rotate()` | 调整元素色相（改变颜色倾向） | `hue-rotate(90deg)` | 单位为角度 |
+| `sepia()` | 将元素转换为深褐色（复古效果） | `sepia(70%)` | 0%（或 0）为原始色彩；100%（或 1）为完全深褐色 |
+| `drop-shadow()` | 为元素添加投影 | `drop-shadow(5px 5px 5px #669)` | 类似 `box-shadow`，但**支持非矩形元素** |
+
+### 使用示例
+
+```css
+/* 单个滤镜 */
+.img {
+  filter: blur(5px);
+}
+
+/* 多个滤镜叠加（按顺序生效） */
+.img {
+  filter: brightness(120%) contrast(110%) saturate(150%);
+}
+
+/* 悬停时切换滤镜（常用于图片交互） */
+.img {
+  filter: grayscale(100%);
+  transition: filter 0.4s;
+}
+.img:hover {
+  filter: grayscale(0);
+}
+```
+
+### drop-shadow 与 box-shadow 区别
+
+| 属性 | 适用范围 |
+| --- | --- |
+| `box-shadow` | 元素**矩形盒子**的阴影 |
+| `filter: drop-shadow()` | 沿着元素**实际可见形状**（如 PNG 透明图、SVG）生成阴影 |
+
+```css
+/* PNG 透明小图标，想要贴合形状的阴影 */
+.icon {
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+```
+
+### 一句话总结
+
+`filter` 让你**不动原图**就能改变视觉效果，多个滤镜可以叠加，常用于图片悬停、视频蒙层、复古风格等场景。
