@@ -181,3 +181,169 @@ CSS 滤镜通过 `filter` 属性实现，可对元素及其子元素进行实时
 ### 一句话总结
 
 `filter` 让你**不动原图**就能改变视觉效果，多个滤镜可以叠加，常用于图片悬停、视频蒙层、复古风格等场景。
+
+# 123.背景滤镜backdrop-filter
+## 背景滤镜
+
+`backdrop-filter` 给元素**背后的区域**加滤镜，常配合半透明背景做毛玻璃。文字、图标本身保持清晰。
+
+## 写法
+
+```css
+.bar {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* Safari */
+}
+```
+
+常用：`blur()`，也可组合 `brightness()` / `saturate()` 等。
+
+## 注意
+
+- 背景必须半透明，纯色看不出效果
+- 后面要有图/视频/内容才有东西可糊
+- 和 `filter` 不同：`filter` 糊的是自己，这个糊的是背后
+
+# 124.动画时间线timeline-滚动时间线
+## 动画时间线
+
+`animation-timeline` 用来把动画进度绑到特定事件上（滚动、视口可见性），而不是只靠时间播放。
+
+## 滚动时间线
+
+动画进度跟页面或容器的滚动位置走：滚多少，播到哪。
+
+```css
+.scrollbar {
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #7c5cff, #ff7ad9);
+  animation: move 2s;
+  animation-timeline: scroll();
+}
+
+@keyframes move {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+```
+
+`animation` 定义动画，`animation-timeline: scroll()` 把进度交给滚动。时长在滚动时间线下不再按秒走完。
+
+## 注意
+
+- `scroll()`：跟页面/容器滚动绑定
+- 还可绑视口可见性（元素进场、离场）
+- 参考：<https://www.porsche.cn/china/zh/models/cayenne/cayenne-models/cayenne-passion/>、<https://stripe.com/zh-us/enterprise>
+
+# 125.动画时间线timeline-视图时间线
+## 视图时间线
+
+动画进度跟元素进入 / 离开视口的可见性走：看见多少，播到哪。
+
+```css
+.card {
+  animation: fade-up 1s linear both;
+  animation-timeline: view();
+}
+
+@keyframes fade-up {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+```
+
+`animation-timeline: view()` 把进度交给元素在视口里的进出，滚动进场即可驱动动画。
+
+# 126.CSS变量的定义以及使用
+## 变量和函数
+
+CSS 变量和动态函数（`calc()`、`clamp()` 等）用来做逻辑和动态计算。常见场景：主题切换、响应式、交互动画。
+
+## 变量
+
+CSS 变量（自定义属性）用来存值和复用，相当于一个容器。
+
+```css
+/* 定义 */
+--color: #000;
+
+/* 使用 */
+color: var(--color);
+background-color: var(--bgcolor);
+```
+
+`--变量名` 定义，`var(--变量名)` 取值。
+
+## 作用域
+
+变量在哪个范围生效：
+
+```css
+:root {              /* 全局，整页可用 */
+  --color: #000;
+}
+
+.box {               /* 局部，只作用于自己和子元素 */
+  --bgcolor: pink;
+}
+
+.nav {
+  color: var(--color);
+  background-color: var(--bgcolor);
+}
+```
+
+- 全局：写在 `:root`
+- 局部：写在具体选择器里，只影响该元素及其子元素
+
+# 127.CSS计算函数calc基本使用
+## CSS3 计算能力
+
+`calc()` 做加减乘除，支持混合单位（如 `%` 和 `px`）。
+
+```css
+.box {
+  width: calc(100% - 20px);              /* 父宽减固定值 */
+  height: calc(var(--base-size) * 1.5);  /* 变量参与运算 */
+}
+```
+
+运算符：`+` `-` `*` `/`，**符号左右必须空格**，例如 `100% - 20px`。
+
+多行多列、绝对定位铺满时常用，如 `width: calc(100% - 100px)`。
+
+# 128.CSS变量和计算函数修改精灵图坐标效果
+## 变量 + calc 做精灵图
+
+用 CSS 变量当序号，`calc()` 算出背景偏移，一套样式切出多帧图标。
+
+```css
+ul li {
+  list-style: none;
+  width: 58px;
+  height: 58px;
+  background: url(./img/sprite.png) no-repeat 0 calc(var(--i) * -58px);
+}
+```
+
+```html
+<ul>
+  <li style="--i:0"></li>
+  <li style="--i:1"></li>
+  <li style="--i:2"></li>
+  <li style="--i:3"></li>
+</ul>
+```
+
+每个 `li` 只改 `--i`，背景 Y 轴按 `-58px * i` 移动，对准雪碧图对应一格。
+
+# 129.综合案例1-动感菜单
+# 130.综合案例2-滑动导航栏效果
+# 131.综合案例3-炫酷导航栏上
+# 132.综合案例3-炫酷导航栏下
+# 133.综合案例4-滚动叠加卡片首屏以及vw和vh单位
+# 134.综合案例4-滚动叠加卡片主体制作
+# 135.综合案例4-滚动叠加卡片制作
+# 136.综合案例4-滚动叠加卡片添加视图时间线
